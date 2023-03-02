@@ -1,0 +1,8 @@
+# object files
+*.o
+# bin
+*.exe
+# csv files
+*.csv
+# vsc config
+.vscode
