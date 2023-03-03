@@ -27,16 +27,19 @@ session_manager_t::~session_manager_t()
 {
     if(m_sessions.rbegin()->not_finished())
         m_sessions.rbegin()->finish();
-    csv_parse::print_filtered_session(m_file, *m_sessions.rbegin());
+    m_file << *m_sessions.rbegin();
     m_file.close();
 }
 
-void session_manager_t::start_new_session(std::string const& session_name, std::vector<std::string> const& session_labels, std::string const& session_comment) noexcept
+void session_manager_t::start_new_session(
+    std::string const& session_name,
+    std::vector<std::string> const& session_labels,
+    std::string const& session_comment) noexcept
 {
     // Write old session to the file
     if (!m_sessions.empty()) {
         m_sessions.rbegin()->finish();
-        csv_parse::print_filtered_session(m_file, *m_sessions.rbegin());
+        m_file << *m_sessions.rbegin();
     }
     // Construct new session
     m_sessions.emplace_back(session_name, session_labels, session_comment);

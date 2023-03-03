@@ -15,6 +15,7 @@ namespace csv_parse
     constexpr std::array<char, 2> bad_csv_chars{'\"', '\n'};
     constexpr char csv_delimiter{','};
     
+    // Returns the array of "illegal" CSV characters
     constexpr std::array<char, 3> get_bad_chars() noexcept
     {
         return { bad_csv_chars[0], bad_csv_chars[1], csv_delimiter };
@@ -41,7 +42,7 @@ namespace csv_parse
     // @return the ostream reference it was given
     template<bool ForceQuot = false>
     inline std::ostream& print_session_header(std::ostream& os) noexcept;
-};
+}; // namespace csv_parse;
 
 // Template function definitions for defined substitutions
 
@@ -70,7 +71,7 @@ std::ostream& csv_parse::print_filtered_session(std::ostream& os, session_t cons
 {
 
     if (session.m_start_time) {
-        // std::strftime doesn't seem to create the correct char string 
+        // std::strftime doesn't seem to create the correct char string
         os << std::setfill('0') << std::setw(4)
            << session.m_start_time->tm_year + 1900
            << "-"

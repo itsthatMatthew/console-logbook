@@ -1,5 +1,5 @@
 // Console Logbook - lightweight progress logger
-// v0.1.12 alpha-build: incomplete codebase
+// v0.1.16 alpha-build: incomplete codebase
 // Copyright (c) Máté Csizmadia
 
 #include <iostream>
@@ -74,8 +74,7 @@ int main()
 
         manager.get_last_session().reset(name_buffer, labels_res, comment_buffer);
 
-        std::cout << "Current session reset:\n  ";
-        csv_parse::print_filtered_session(std::cout, manager.get_last_session()) << std::endl;
+        std::cout << "Current session reset:\n  " << manager.get_last_session() << std::endl;
     )};
 /*
     available_commands["edit"] = {"Edit current session settings.",
@@ -104,14 +103,12 @@ int main()
 
         manager.start_new_session(name_buffer, labels_res, comment_buffer);
 
-        std::cout << "New session started:\n  ";
-        csv_parse::print_filtered_session(std::cout, manager.get_last_session()) << std::endl;
+        std::cout << "New session started:\n  " << manager.get_last_session() << std::endl;
     )};
 
     available_commands["show"] = {"Shows the attributes of the current session.",
     CLCMD_LAMBDA(
-        std::cout << "Current session:\n  ";
-        csv_parse::print_filtered_session(std::cout, manager.get_last_session());
+        std::cout << "Current session:\n  " << manager.get_last_session();
     )};
 
     #undef CLCMD_LAMBDA

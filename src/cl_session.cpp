@@ -22,8 +22,13 @@ void session_t::finish() noexcept
     m_finish_time.reset(new tm{*std::localtime(&current_time)});
 }
 
-void session_t::reset(std::string const& name, std::vector<std::string> const& labels, std::string const& comment) noexcept
+void session_t::reset(
+    std::string const& name,
+    std::vector<std::string> const& labels,
+    std::string const& comment
+) noexcept
 {
+    // Overwrite members except time values
     m_name = name;
     m_labels = labels;
     m_comment = comment;
@@ -31,7 +36,5 @@ void session_t::reset(std::string const& name, std::vector<std::string> const& l
 
 std::ostream& operator<<(std::ostream& os, session_t const& session)
 {
-    csv_parse::print_filtered_session<false>(os, session);
-
-    return os;
+    return csv_parse::print_filtered_session<false>(os, session);
 }

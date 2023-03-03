@@ -20,17 +20,14 @@ public:
     session_t(session_t const&) = delete;
     session_t& operator=(session_t const&) = delete;
 
-    // Finishes the session by creating finish time
+    // Finishes the session by setting finish time
     void finish() noexcept;
 
     // Checks if the session is finished
     bool not_finished() const noexcept { return m_finish_time.get() == nullptr; }
 
-    // Resets the attributes of the current session
+    // Resets the attributes of the session
     void reset(std::string const& name, std::vector<std::string> const& labels, std::string const& comment) noexcept;
-
-    // Overloaded inserter operator for ease of use
-    friend std::ostream& operator<<(std::ostream& os, session_t const& process);
 
 public: // @todo safe member management
     std::string m_name;
@@ -39,5 +36,8 @@ public: // @todo safe member management
     std::unique_ptr<tm> m_start_time;
     std::unique_ptr<tm> m_finish_time;
 }; // class session_t
+
+// Overloaded inserter operator for ease of use
+std::ostream& operator<<(std::ostream& os, session_t const& process);
 
 #endif // CL_SESSION_HPP_INCLUDED_
