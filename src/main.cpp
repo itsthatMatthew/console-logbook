@@ -1,5 +1,5 @@
 // Console Logbook - lightweight progress logger
-// v0.1.16 alpha-build: incomplete codebase
+// v0.1.19 alpha-build: incomplete codebase
 // Copyright (c) Máté Csizmadia
 
 #include <iostream>

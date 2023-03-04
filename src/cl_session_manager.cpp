@@ -20,7 +20,7 @@ session_manager_t::session_manager_t(std::string const& path)
         m_file.open(path, std::ios::app);
     }
     // default unnamed session (gets reset in main)
-    start_new_session("Not named", {""}, "");
+    start_new_session("Unnamed session", {""}, "");
 }
 
 session_manager_t::~session_manager_t()

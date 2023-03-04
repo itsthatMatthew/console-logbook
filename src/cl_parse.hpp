@@ -69,8 +69,8 @@ std::ostream& csv_parse::print_filtered_text<true>(std::ostream& os, std::string
 template<bool ForceQuot>
 std::ostream& csv_parse::print_filtered_session(std::ostream& os, session_t const& session) noexcept
 {
-
-    if (session.m_start_time) {
+    // Print start time
+    if (session.m_start_time.get() != nullptr) {
         // std::strftime doesn't seem to create the correct char string
         os << std::setfill('0') << std::setw(4)
            << session.m_start_time->tm_year + 1900
@@ -92,8 +92,8 @@ std::ostream& csv_parse::print_filtered_session(std::ostream& os, session_t cons
     {
         os << "N/A" << csv_delimiter;
     }
-
-    if (session.m_finish_time) {
+    // Print finish time
+    if (session.m_finish_time.get() != nullptr) {
         os << std::setfill('0') << std::setw(4)
            << session.m_finish_time->tm_year + 1900
            << "-"
@@ -114,20 +114,19 @@ std::ostream& csv_parse::print_filtered_session(std::ostream& os, session_t cons
     {
         os << "N/A" << csv_delimiter;
     }
-
+    // Print name
     csv_parse::print_filtered_text<ForceQuot>(os, session.m_name) << csv_delimiter;
-
-    os << "\"";
+    // Print labels
+    std::stringstream labels_stream{};
     if (!session.m_labels.empty())
-        os << session.m_labels.at(0);
+        csv_parse::print_filtered_text<ForceQuot>(labels_stream, session.m_labels.at(0));
     for (size_t idx = 1; idx < session.m_labels.size(); ++idx)
     {
-        os << csv_delimiter;
-        csv_parse::print_filtered_text<ForceQuot>(os, session.m_labels.at(idx));
+        labels_stream << csv_delimiter;
+        csv_parse::print_filtered_text<ForceQuot>(labels_stream, session.m_labels.at(idx));
     }
-
-    os << "\"" << csv_delimiter;
-
+    print_filtered_text<ForceQuot>(os, labels_stream.str()) << csv_delimiter;
+    // Print comment
     csv_parse::print_filtered_text<ForceQuot>(os, session.m_comment) << "\n";
 
     return os;
